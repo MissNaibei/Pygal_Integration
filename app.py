@@ -1,16 +1,39 @@
-from flask import Flask,render_template
+from flask import Flask,render_template, request
 
 import pygal
 
 import psycopg2
 
+from flask_sqlalchemy import SQLAlchemy
+
+
 app = Flask(__name__)
+
+db = SQLAlchemy(app)
+
+
 
 
 @app.route('/')
 def hello_world():
-    return render_template('dashboard.html')
+    return render_template('index.html')
 
+
+@app.route('/add_inventory', methods=['POST', 'GET'])
+def add_inventory():
+    if request.method == 'POST':
+        name = request.form['Name']
+        type = request.form['type']
+        buying_price = request.form['bp']
+        selling_price = request.form['sp']
+        stock = request.form['Stock']
+
+        print(name)
+        print(type)
+        print(buying_price)
+        print(selling_price)
+
+    return 'Naibei'
 
 
 @app.route('/dashboard')
@@ -50,10 +73,10 @@ order by EXTRACT(MONTH FROM s.created_at) asc
     # pie_data = pie_chart.render_data_uri()
     # return render_template('dashboard.html',pie_data=pie_data)
 
-    graph = pygal.Line()
-    graph.title = 'Monthly Sales'
-    graph.x_labels = x_axis
-    graph.add('Total Sales', y_axis)
+    # graph = pygal.Line()
+    # graph.title = 'Monthly Sales'
+    # graph.x_labels = x_axis
+    # graph.add('Total Sales', y_axis)
 
     graph_data = graph.render_data_uri()
 
