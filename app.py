@@ -16,6 +16,8 @@ db = SQLAlchemy(app)
 
 from models.inventories import Inventories
 
+from models.sales import Sales
+
 @app.before_first_request
 def create_tables():
     db.create_all()
@@ -24,7 +26,10 @@ def create_tables():
 
 @app.route('/')
 def hello_world():
-    return render_template('index.html')
+    x = 'Naibei'
+    records = Inventories.fetch_all_records()
+
+    return render_template('index.html', records=records, x=x)
 
 
 @app.route('/add_inventory', methods=['POST', 'GET'])
