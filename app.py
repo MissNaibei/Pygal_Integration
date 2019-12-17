@@ -1,4 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for
+from builtins import print
+
+from flask import Flask, render_template, request, redirect, url_for, flash
 
 import pygal
 
@@ -21,6 +23,47 @@ from models.sales import Sales
 @app.before_first_request
 def create_tables():
     db.create_all()
+
+# @app.route('/test/<name>')
+# def test(name):
+#     return name
+
+# @app.route('/test/<num1>/<num2>')
+# def test(num1,num2):
+#     print(int(num1) + int(num2))
+
+
+@app.route('/salepro/<int:id>', methods=['POST', 'GET'])
+def makeSales (id):
+    record = Inventories.fetch_one_record(id)
+    if record:
+        if request.method == 'POST':
+
+            quantity = request.form['Quantity']
+
+            newStock = record.stock - int(quantity)
+
+            record.stock = newStock
+
+            db.session.commit()
+
+            sales = Sales(inv_id=id, quantity=quantity)
+
+            sales.add_records()
+
+            flash('You have successfully made a sale', 'success')
+
+        return redirect(url_for('hello_world'))
+
+
+@app.route('/viewsales/<int:id>')
+def viewSales(id):
+
+    record = Inventories.fetch_one_record(id)
+
+    return render_template('viewsales.html', record=record)
+
+
 
 
 
