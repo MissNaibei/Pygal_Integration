@@ -1,4 +1,4 @@
-from builtins import print
+from datetime import datetime
 
 from flask import Flask, render_template, request, redirect, url_for, flash
 
@@ -7,18 +7,20 @@ import pygal
 import psycopg2
 
 from flask_sqlalchemy import SQLAlchemy
-
+from Config.Config import Development
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Nancy22*@127.0.0.1:5432/sales_demo'
-app.config['SECRET_KEY'] = 'KenyaYetuMoja'
-app.config['DEBUG'] = True
+app.config.from_object(Development)
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Nancy22*@127.0.0.1:5432/sales_demo'
+# app.config['SECRET_KEY'] = 'KenyaYetuMoja'
+# app.config['DEBUG'] = True
 db = SQLAlchemy(app)
 
 
 from models.inventories import Inventories
 
 from models.sales import Sales
+
 
 @app.before_first_request
 def create_tables():
@@ -64,7 +66,34 @@ def viewSales(id):
     return render_template('viewsales.html', record=record)
 
 
+@app.route('/delete/<int:id>')
+def delete(id):
+    record = Inventories.fetch_one_record(id)
+    print(record.id)
+    print(record.name)
+    db.session.delete(record)
+    db.session.commit()
+    flash('You have successfully deleted the Inventory', 'danger')
+    return redirect(url_for('hello_world'))
 
+
+@app.route('/edit/<int:id>', methods=['POST', 'GET'])
+def edit(id):
+
+    record = Inventories.fetch_one_record(id)
+
+    if request.method == 'POST':
+        record.name = request.form['Name']
+        record.type = request.form['type']
+        record.buying_price = request.form['bp']
+        record.selling_price = request.form['sp']
+        record.stock = request.form['Stock']
+
+        db.session.commit()
+
+        return redirect(url_for('hello_world'))
+
+    return render_template('edit.html', record=record)
 
 
 @app.route('/')

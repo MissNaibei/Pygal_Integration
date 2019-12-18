@@ -6,7 +6,9 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <style>
+
         body {
             background-color: lightgreen;
         }
@@ -182,86 +184,23 @@
                             </td>
                             <td>
                                 <a href="/viewsales/{{ each.id }}">
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">View Sale
+                                    <button type="button" class="btn btn-success" data-dismiss="modal">View Sale
                                     </button>
                                 </a>
-                                {#                            <a_href = "/viewSales/{{ each.id }}"><button type="button" class="btn btn-secondary" data-dismiss="modal">View Sale</button></a></td>#}
+                                {#<a_href = "/viewSales/{{ each.id }}"><button type="button" class="btn btn-secondary" data-dismiss="modal">View Sale</button></a></td>#}
 
+                            <td><a href="{{ url_for('edit', id=each.id) }}"<button type="button" class="btn btn-warning" data-dismiss="modal">Edit
+                                </button>
+                                </a>
+                            </td>
                             <td>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Delete</button>
-
-                                <!-- Modal -->
-                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                                     aria-labelledby="exampleModalLabel"
-                                     aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-
-
-                                                <form action="/salepro" method="POST">
-                                                    <div class="form-group">
-                                                        <label for="exampleFormControlInput1">Name</label>
-                                                        <input name="Name" type="string" class="form-control"
-                                                               id="exampleFormControlInput1"
-                                                               placeholder="type name">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="exampleFormControlSelect1">type</label>
-                                                        <select name="type" class="form-control"
-                                                                id="exampleFormControlSelect1">
-                                                            <option></option>
-                                                            <option>Product</option>
-                                                            <option>Service</option>
-
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="exampleFormControlInput1">bp</label>
-                                                        <input name="bp" type="Integer" class="form-control"
-                                                               id="exampleFormControlInput1"
-                                                               placeholder="Enter Value">
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="exampleFormControlInput1">sp</label>
-                                                        <input name="sp" type="Integer" class="form-control"
-                                                               id="exampleFormControlInput1"
-                                                               placeholder="Enter Value">
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="exampleFormControlInput1">Stock</label>
-                                                        <input name="Stock" type="integer" class="form-control"
-                                                               id="exampleFormControlInput1" placeholder="Enter Value">
-                                                    </div>
-
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Close
-                                                        </button>
-                                                        <button type="submit" class="btn btn-primary">Save changes
-                                                        </button>
-                                                    </div>
-
-                                                </form>
-
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
+                                {#                                <a href="/delete/{{ each.id }}">#}
+                                <a href="{{ url_for('delete', id=each.id ) }}"
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                                </a>
 
                             </td>
+
                         </tr>
                     {% endfor %}
                 {% endif %}
