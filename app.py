@@ -11,7 +11,7 @@ from Config.Config import Development
 
 app = Flask(__name__)
 app.config.from_object(Development)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Nancy22*@127.0.0.1:5432/sales_demo'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password@127.0.0.1:5432/sales_demo'
 # app.config['SECRET_KEY'] = 'KenyaYetuMoja'
 # app.config['DEBUG'] = True
 db = SQLAlchemy(app)
