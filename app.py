@@ -128,7 +128,7 @@ def add_inventory():
 # @app.route('/dashboard')
 # def pie_chart():
 #
-#     conn = psycopg2.connect("dbname='sales_demo' user='postgres' host='localhost' password='Nancy22*'")
+#     conn = psycopg2.connect("dbname='sales_demo' user='postgres' host='localhost' password='password'")
 #
 #     cur = conn.cursor()
 #
